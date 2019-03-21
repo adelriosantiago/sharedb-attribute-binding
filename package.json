@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "test-cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha",
-    "format": "prettier --write \"**/*.js\"",
+    "format": "prettier --write \"**/*.js\""
   },
   "repository": {
     "type": "git",

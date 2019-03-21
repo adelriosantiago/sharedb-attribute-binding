@@ -1,15 +1,15 @@
-var TextDiffBinding = require('./text-diff-binding');
+var AttrDiffBinding = require('./attr-diff-binding');
 
 module.exports = StringBinding;
 
 function StringBinding(element, doc, path) {
-	TextDiffBinding.call(this, element);
+	AttrDiffBinding.call(this, element);
 	this.doc = doc;
 	this.path = path || [];
 	this._opListener = null;
 	this._inputListener = null;
 }
-StringBinding.prototype = Object.create(TextDiffBinding.prototype);
+StringBinding.prototype = Object.create(AttrDiffBinding.prototype);
 StringBinding.prototype.constructor = StringBinding;
 
 StringBinding.prototype.setup = function () {
