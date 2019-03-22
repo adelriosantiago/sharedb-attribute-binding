@@ -2,8 +2,8 @@ var AttrDiffBinding = require('./attr-diff-binding');
 
 module.exports = StringBinding;
 
-function StringBinding(element, doc, path) {
-	AttrDiffBinding.call(this, element);
+function StringBinding(element, doc, path, attr) {
+	AttrDiffBinding.call(this, element, attr);
 	this.doc = doc;
 	this.path = path || [];
 	this._opListener = null;
