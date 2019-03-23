@@ -24,7 +24,10 @@ doc.subscribe((err) => {
   if (err) throw err;
   const element = document.getElementById('YOUR_DIV_OR_WHATEVER');
   const binding = new AttributeGenericBinding(element, doc, [], "id"); //To set the element `id`
+  //const binding = new AttributeGenericBinding(element, doc, [], "href"); //To set the element `href`
+  //const binding = new AttributeGenericBinding(element, doc, [], "src"); //To set the element `src`
   //const binding = new AttributeGenericBinding(element, doc, [], "html"); //To set the element `innerHTML`
+  //etc
   binding.setup();
 });
 ```

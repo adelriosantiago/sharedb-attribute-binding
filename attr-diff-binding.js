@@ -105,19 +105,12 @@ TextDiffBinding.prototype.update = function() {
   } else if (typeof this.attrToSet === "string") {
     if (this.attrToSet === "value") return;
     
-    if (this.attrToSet === "id") {
-      this.element.id = value;
+    if (["id", "src", "href", "style"].indexOf(this.attrToSet) >= 0) {
+      this.element.setAttribute(this.attrToSet, value);
     } else if (this.attrToSet === "html") {
       this.element.innerHTML = value;
     } else if (this.attrToSet === "class") {
       //Not yet implemented
-    } else if (this.attrToSet === "style") {
-      //Not yet implemented
-    } else if (this.attrToSet === "src") {
-      //Not yet implemented
-    } else if (this.attrToSet === "href") {
-      //Not yet implemented
     }
-    //TODO: Implement all other possible attributes
   }
 };
