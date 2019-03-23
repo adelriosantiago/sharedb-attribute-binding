@@ -3,6 +3,9 @@ module.exports = TextDiffBinding;
 function TextDiffBinding(element, attrToSet) {
   this.element = element;
   this.attrToSet = attrToSet;
+  if (attrToSet === "class") {
+    this.originalClasses = element.className;
+  }
 }
 
 TextDiffBinding.prototype._get =
@@ -110,7 +113,7 @@ TextDiffBinding.prototype.update = function() {
     } else if (this.attrToSet === "html") {
       this.element.innerHTML = value;
     } else if (this.attrToSet === "class") {
-      //Not yet implemented
+      this.element.className = this.originalClasses + " " + value;
     }
   }
 };

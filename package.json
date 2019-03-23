@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "test-cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha",
     "format": "prettier --write \"**/*.js\""
   },
   "repository": {
@@ -16,6 +15,9 @@
     "sharedb",
     "sharejs",
     "stringbinding",
+    "attribute binding",
+    "sharedb-string-binding",
+    "sharedb-generic-binding",
     "text-diff-binding"
   ],
   "author": "Alejandro del Río",
@@ -27,7 +29,6 @@
   "devDependencies": {
     "coveralls": "^3.0.1",
     "expect.js": "^0.3.1",
-    "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "prettier": "^1.16.4",
     "sharedb": "^1.0.0-beta.9"

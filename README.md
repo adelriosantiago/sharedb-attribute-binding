@@ -1,8 +1,9 @@
 # sharedb-attribute-binding
 
-***STATUS:** Work In Progress*
+A ShareDB binding that allows you to bind element attributes like `id`, `class`, `style` and of course input's `value`.
+Based on https://github.com/stanographer/sharedb-generic-binding.
 
-A ShareDB binding that allows you to bind element attributes like `id`, `class`, `style` and of course input's `value`. Based on https://github.com/stanographer/sharedb-generic-binding.
+*As used in [boy.dog](www.boy.dog). The web library that allows you to create real-time collaborative webpages.*
 
 ## Usage
 
@@ -27,7 +28,19 @@ doc.subscribe((err) => {
   //const binding = new AttributeGenericBinding(element, doc, [], "href"); //To set the element `href`
   //const binding = new AttributeGenericBinding(element, doc, [], "src"); //To set the element `src`
   //const binding = new AttributeGenericBinding(element, doc, [], "html"); //To set the element `innerHTML`
-  //etc
+  //const binding = new AttributeGenericBinding(element, doc, [], "class"); //To set the element `className` (keeping old classes)
+  //or
+  //const binding = new AttributeGenericBinding(element, doc, [], function(element, value) { [CUSTOM_FUNCTION] }); //Set a custom function callback
+  
   binding.setup();
 });
 ```
+
+## Tests
+
+Run `npm run test`. They all should work but bear in mind that no tests have been created for all attributes (src, href, id, etc).
+
+
+## License
+
+MIT - Alejandro del Río Santiago [@adelriosantiago](https://twitter.com/adelriosantiago) ([boy.dog](www.boy.dog))
