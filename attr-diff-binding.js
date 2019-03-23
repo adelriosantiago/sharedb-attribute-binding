@@ -8,23 +8,24 @@ function TextDiffBinding(element, attrToSet) {
   }
 }
 
-TextDiffBinding.prototype._get =
-TextDiffBinding.prototype._insert =
-TextDiffBinding.prototype._remove = function() {
-  throw new Error('`_get()`, `_insert(index, length)`, and `_remove(index, length)` prototype methods must be defined.');
+TextDiffBinding.prototype._get = TextDiffBinding.prototype._insert = TextDiffBinding.prototype._remove = function() {
+  throw new Error(
+    "`_get()`, `_insert(index, length)`, and `_remove(index, length)` prototype methods must be defined."
+  );
 };
 
 TextDiffBinding.prototype._getElementValue = function() {
   var value = this.element.value || ""; //Always set the element value no matter what
   // IE and Opera replace \n with \r\n. Always store strings as \n
-  return value.replace(/\r\n/g, '\n');
+  return value.replace(/\r\n/g, "\n");
 };
 
 TextDiffBinding.prototype._getInputEnd = function(previous, value) {
   if (this.element !== document.activeElement) return null;
   var end = value.length - this.element.selectionStart;
   if (end === 0) return end;
-  if (previous.slice(previous.length - end) !== value.slice(value.length - end)) return null;
+  if (previous.slice(previous.length - end) !== value.slice(value.length - end))
+    return null;
   return end;
 };
 
@@ -45,7 +46,8 @@ TextDiffBinding.prototype.onInput = function() {
     }
     end = 0;
     while (
-      previous.charAt(previous.length - 1 - end) === value.charAt(value.length - 1 - end) &&
+      previous.charAt(previous.length - 1 - end) ===
+        value.charAt(value.length - 1 - end) &&
       end + start < previous.length &&
       end + start < value.length
     ) {
@@ -75,23 +77,39 @@ TextDiffBinding.prototype.onInsert = function(index, length) {
   this._transformSelectionAndUpdate(index, length, insertCursorTransform);
 };
 function insertCursorTransform(index, length, cursor) {
-  return (index < cursor) ? cursor + length : cursor;
+  return index < cursor ? cursor + length : cursor;
 }
 
 TextDiffBinding.prototype.onRemove = function(index, length) {
   this._transformSelectionAndUpdate(index, length, removeCursorTransform);
 };
 function removeCursorTransform(index, length, cursor) {
-  return (index < cursor) ? cursor - Math.min(length, cursor - index) : cursor;
+  return index < cursor ? cursor - Math.min(length, cursor - index) : cursor;
 }
 
-TextDiffBinding.prototype._transformSelectionAndUpdate = function(index, length, transformCursor) {
+TextDiffBinding.prototype._transformSelectionAndUpdate = function(
+  index,
+  length,
+  transformCursor
+) {
   if (document.activeElement === this.element) {
-    var selectionStart = transformCursor(index, length, this.element.selectionStart);
-    var selectionEnd = transformCursor(index, length, this.element.selectionEnd);
+    var selectionStart = transformCursor(
+      index,
+      length,
+      this.element.selectionStart
+    );
+    var selectionEnd = transformCursor(
+      index,
+      length,
+      this.element.selectionEnd
+    );
     var selectionDirection = this.element.selectionDirection;
     this.update();
-    this.element.setSelectionRange(selectionStart, selectionEnd, selectionDirection);
+    this.element.setSelectionRange(
+      selectionStart,
+      selectionEnd,
+      selectionDirection
+    );
   } else {
     this.update();
   }
@@ -101,13 +119,13 @@ TextDiffBinding.prototype.update = function() {
   var value = this._get();
   if (this._getElementValue() === value) return;
   this.element.value = value;
-  
+
   //Copy the value to the desired attribute
   if (typeof this.attrToSet === "function") {
-	  this.attrToSet(this.element, value);
+    this.attrToSet(this.element, value);
   } else if (typeof this.attrToSet === "string") {
     if (this.attrToSet === "value") return;
-    
+
     if (["id", "src", "href", "style"].indexOf(this.attrToSet) >= 0) {
       this.element.setAttribute(this.attrToSet, value);
     } else if (this.attrToSet === "html") {
