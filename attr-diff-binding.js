@@ -1,8 +1,9 @@
 module.exports = TextDiffBinding;
 
-function TextDiffBinding(element, attrToSet) {
+function TextDiffBinding(element, attrToSet, events) {
   this.element = element;
   this.attrToSet = attrToSet;
+  this.events = events; //TODO
   if (attrToSet === "class") {
     this.originalClasses = element.className;
   }
@@ -116,9 +117,10 @@ TextDiffBinding.prototype._transformSelectionAndUpdate = function(
 };
 
 TextDiffBinding.prototype.update = function() {
-  var value = this._get();
+  let value = this._get();
+
   if (this._getElementValue() === value) return;
-  this.element.value = value;
+  this.element.value = value; //Set the element value (even if it is not an input)
 
   //Copy the value to the desired attribute
   if (typeof this.attrToSet === "function") {
