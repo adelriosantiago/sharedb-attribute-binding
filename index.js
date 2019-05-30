@@ -1,4 +1,4 @@
-var AttrDiffBinding = require("./attr-diff-binding");
+const AttrDiffBinding = require("./attr-diff-binding");
 
 module.exports = StringBinding;
 

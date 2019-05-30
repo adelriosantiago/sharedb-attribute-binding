@@ -4,6 +4,7 @@ function TextDiffBinding(element, attrToSet, events) {
   this.element = element;
   this.attrToSet = attrToSet;
   this.events = events; //TODO
+  this.lastOp = { cursor: undefined, index: undefined, length: undefined, transformCursor: (function() {}) }; //Set last operation mock
   if (attrToSet === "class") {
     this.originalClasses = element.className;
   }
@@ -94,6 +95,19 @@ TextDiffBinding.prototype._transformSelectionAndUpdate = function(
   transformCursor
 ) {
   if (document.activeElement === this.element) {
+
+    let restoreCursorTo;
+    let currentOp = { cursor: this.element.selectionStart, index, length, transformCursor };
+
+    if ((this.lastOp.transformCursor.name === "removeCursorTransform") && (currentOp.transformCursor.name === "insertCursorTransform") //If the last operation was a remove
+      && (this.lastOp.cursor > currentOp.index) //And it is in the range of the cursor
+      && (this.lastOp.index === currentOp.index) //And it is an actual replacement because both start at the same index
+    ) {
+      restoreCursorTo = this.lastOp.cursor; //Save where the cursor was
+    }
+
+    this.lastOp = currentOp; //Set last op
+
     var selectionStart = transformCursor(
       index,
       length,
@@ -111,6 +125,8 @@ TextDiffBinding.prototype._transformSelectionAndUpdate = function(
       selectionEnd,
       selectionDirection
     );
+    
+    if (restoreCursorTo) this.element.setSelectionRange(restoreCursorTo, restoreCursorTo); //Restore cursor in the event of a replacement (a `removeCursorTransform` followed by a `insertCursorTransform`)
   } else {
     this.update();
   }
