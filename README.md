@@ -28,9 +28,9 @@ doc.subscribe((err) => {
   //const binding = new AttributeGenericBinding(element, doc, [], "href"); //To set the element `href`
   //const binding = new AttributeGenericBinding(element, doc, [], "src"); //To set the element `src`
   //const binding = new AttributeGenericBinding(element, doc, [], "html"); //To set the element `innerHTML`
-  //const binding = new AttributeGenericBinding(element, doc, [], "class"); //To set the element `className` (keeping old classes)
+  //const binding = new AttributeGenericBinding(element, doc, [], "class"); //To set the element `className` (this keeps old classes)
   //or
-  //const binding = new AttributeGenericBinding(element, doc, [], function(element, value) { [CUSTOM_FUNCTION] }); //Set a custom function callback
+  //const binding = new AttributeGenericBinding(element, doc, [], function(element, value) { [CUSTOM_FUNCTION] }); //To set a custom function callback
   
   binding.setup();
 });
@@ -39,7 +39,6 @@ doc.subscribe((err) => {
 ## Tests
 
 Run `npm run test`. They all should work but bear in mind that no tests have been created for all attributes (src, href, id, etc).
-
 
 ## License
 
