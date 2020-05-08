@@ -28,9 +28,9 @@
   "homepage": "https://github.com/adelriosantiago/sharedb-attribute-binding",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^6.0.2",
-    "prettier": "^1.16.4",
-    "sharedb": "^1.0.0-beta.9"
+    "mocha": "^6.2.3",
+    "prettier": "^1.19.1",
+    "sharedb": "^1.3.3"
   },
   "dependencies": {}
 }
