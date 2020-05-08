@@ -42,4 +42,4 @@ Run `npm run test`. They all should work but bear in mind that no tests have bee
 
 ## License
 
-MIT - Alejandro del Río Santiago [@adelriosantiago](https://twitter.com/adelriosantiago) ([boy.dog](www.boy.dog))
+MIT - Alejandro del Río Santiago [@adelriosantiago](https://twitter.com/adelriosantiago) ([boy.dog](http://boy.dog/))
