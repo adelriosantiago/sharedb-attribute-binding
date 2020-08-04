@@ -28,8 +28,8 @@
   "homepage": "https://github.com/adelriosantiago/sharedb-attribute-binding",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^6.2.3",
-    "prettier": "^1.19.1",
+    "mocha": "^8.1.0",
+    "prettier": "^2.0.5",
     "sharedb": "^1.4.1"
   },
   "dependencies": {}
