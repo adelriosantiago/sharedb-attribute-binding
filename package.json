@@ -1,6 +1,6 @@
 {
   "name": "sharedb-attribute-binding",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A ShareDB binding that allows you to bind element attributes like `id`, `class`, `style` and of course input's `value`",
   "main": "index.js",
   "scripts": {
