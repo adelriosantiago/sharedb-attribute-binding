@@ -3,7 +3,7 @@
 A ShareDB binding that allows you to bind element attributes like `id`, `class`, `style` and of course input's `value`.
 Based on https://github.com/stanographer/sharedb-generic-binding.
 
-*As used in [boy.dog](www.boy.dog). The web library that allows you to create real-time collaborative webpages.*
+*As used in [boy.dog](http://boy.dog). The web library that allows you to create real-time collaborative webpages.*
 
 ## Usage
 
