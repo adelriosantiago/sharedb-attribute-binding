@@ -24,14 +24,17 @@ const doc = connection.get("examples", "textarea");
 doc.subscribe((err) => {
   if (err) throw err;
   const element = document.getElementById("YOUR_DIV_OR_WHATEVER");
-  //const binding = new AttributeGenericBinding(element, doc, [], ""); //To set the element value
-  const binding = new AttributeGenericBinding(element, doc, [], "id"); //To set the element `id`
-  //const binding = new AttributeGenericBinding(element, doc, [], "href"); //To set the element `href`
-  //const binding = new AttributeGenericBinding(element, doc, [], "src"); //To set the element `src`
-  //const binding = new AttributeGenericBinding(element, doc, [], "html"); //To set the element `innerHTML`
-  //const binding = new AttributeGenericBinding(element, doc, [], "class"); //To set the element `className` (this keeps old classes)
+
+  // Use any of the following:
+
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], ""); //To set the input/textarea value
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], "id"); //To set the element `id`
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], "href"); //To set the element `href`
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], "src"); //To set the element `src`
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], "html"); //To set the element `innerHTML`
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], "class"); //To set the element `className` (this keeps old classes)
   //or
-  //const binding = new AttributeGenericBinding(element, doc, [], function(element, value) { [CUSTOM_FUNCTION] }); //To set a custom function callback
+  //const binding = new AttributeGenericBinding(element, doc, ["content"], function(element, value) { [CUSTOM_FUNCTION] }); //To set a custom function callback
 
   // All examples above will also set elements' value (i.e. to bind an input use `const binding = new AttributeGenericBinding(element, doc, [], "")`)
 
