@@ -147,21 +147,25 @@ TextDiffBinding.prototype._transformSelectionAndUpdate = function (
 TextDiffBinding.prototype.update = function () {
   let value = this._get();
 
-  if (this._getElementValue() === value) return;
-  this.element.value = value; //Set the element value (even if it is not an input)
+  if (this._getElementValue() !== value) this.element.value = value; // Always set the elements value
 
-  //Copy the value to the desired attribute
+  // Copy the value to the desired attribute
   if (typeof this.attrToSet === "function") {
     this.attrToSet(this.element, value);
   } else if (typeof this.attrToSet === "string") {
-    if (this.attrToSet === "value") return;
-
     if (["id", "src", "href", "style"].indexOf(this.attrToSet) >= 0) {
-      this.element.setAttribute(this.attrToSet, value);
-    } else if (this.attrToSet === "html") {
-      this.element.innerHTML = value;
-    } else if (this.attrToSet === "class") {
-      this.element.className = this.originalClasses + " " + value;
+      // Setting attribute with same name
+      if (this.element.getAttribute(this.attrToSet) !== value)
+        this.element.setAttribute(this.attrToSet, value);
+    } else {
+      // Setting attributes with different names
+      if (this.attrToSet === "html") {
+        if (this.element.innerHTML !== value) this.element.innerHTML = value;
+      } else if (this.attrToSet === "class") {
+        const classesToAdd = (this.originalClasses + " " + value).trim();
+        if (this.element.className.trim() !== classesToAdd)
+          this.element.className = classesToAdd;
+      }
     }
   }
 };
