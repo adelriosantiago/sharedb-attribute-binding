@@ -4,25 +4,30 @@ function TextDiffBinding(element, attrToSet, events) {
   this.element = element;
   this.attrToSet = attrToSet;
   this.events = events; //TODO
-  this.lastOp = { cursor: undefined, index: undefined, length: undefined, transformCursor: (function() {}) }; //Set last operation mock
+  this.lastOp = {
+    cursor: undefined,
+    index: undefined,
+    length: undefined,
+    transformCursor: function () {},
+  }; //Set last operation mock
   if (attrToSet === "class") {
     this.originalClasses = element.className;
   }
 }
 
-TextDiffBinding.prototype._get = TextDiffBinding.prototype._insert = TextDiffBinding.prototype._remove = function() {
+TextDiffBinding.prototype._get = TextDiffBinding.prototype._insert = TextDiffBinding.prototype._remove = function () {
   throw new Error(
     "`_get()`, `_insert(index, length)`, and `_remove(index, length)` prototype methods must be defined."
   );
 };
 
-TextDiffBinding.prototype._getElementValue = function() {
+TextDiffBinding.prototype._getElementValue = function () {
   var value = this.element.value || ""; //Always set the element value no matter what
   // IE and Opera replace \n with \r\n. Always store strings as \n
   return value.replace(/\r\n/g, "\n");
 };
 
-TextDiffBinding.prototype._getInputEnd = function(previous, value) {
+TextDiffBinding.prototype._getInputEnd = function (previous, value) {
   if (this.element !== document.activeElement) return null;
   var end = value.length - this.element.selectionStart;
   if (end === 0) return end;
@@ -31,7 +36,7 @@ TextDiffBinding.prototype._getInputEnd = function(previous, value) {
   return end;
 };
 
-TextDiffBinding.prototype.onInput = function() {
+TextDiffBinding.prototype.onInput = function () {
   var previous = this._get();
   var value = this._getElementValue();
   if (previous === value) return;
@@ -75,33 +80,39 @@ TextDiffBinding.prototype.onInput = function() {
   }
 };
 
-TextDiffBinding.prototype.onInsert = function(index, length) {
+TextDiffBinding.prototype.onInsert = function (index, length) {
   this._transformSelectionAndUpdate(index, length, insertCursorTransform);
 };
 function insertCursorTransform(index, length, cursor) {
   return index < cursor ? cursor + length : cursor;
 }
 
-TextDiffBinding.prototype.onRemove = function(index, length) {
+TextDiffBinding.prototype.onRemove = function (index, length) {
   this._transformSelectionAndUpdate(index, length, removeCursorTransform);
 };
 function removeCursorTransform(index, length, cursor) {
   return index < cursor ? cursor - Math.min(length, cursor - index) : cursor;
 }
 
-TextDiffBinding.prototype._transformSelectionAndUpdate = function(
+TextDiffBinding.prototype._transformSelectionAndUpdate = function (
   index,
   length,
   transformCursor
 ) {
   if (document.activeElement === this.element) {
-
     let restoreCursorTo;
-    let currentOp = { cursor: this.element.selectionStart, index, length, transformCursor };
+    let currentOp = {
+      cursor: this.element.selectionStart,
+      index,
+      length,
+      transformCursor,
+    };
 
-    if ((this.lastOp.transformCursor.name === "removeCursorTransform") && (currentOp.transformCursor.name === "insertCursorTransform") //If the last operation was a remove
-      && (this.lastOp.cursor > currentOp.index) //And it is in the range of the cursor
-      && (this.lastOp.index === currentOp.index) //And it is an actual replacement because both start at the same index
+    if (
+      this.lastOp.transformCursor.name === "removeCursorTransform" &&
+      currentOp.transformCursor.name === "insertCursorTransform" && //If the last operation was a remove
+      this.lastOp.cursor > currentOp.index && //And it is in the range of the cursor
+      this.lastOp.index === currentOp.index //And it is an actual replacement because both start at the same index
     ) {
       restoreCursorTo = this.lastOp.cursor; //Save where the cursor was
     }
@@ -125,14 +136,15 @@ TextDiffBinding.prototype._transformSelectionAndUpdate = function(
       selectionEnd,
       selectionDirection
     );
-    
-    if (restoreCursorTo) this.element.setSelectionRange(restoreCursorTo, restoreCursorTo); //Restore cursor in the event of a replacement (a `removeCursorTransform` followed by a `insertCursorTransform`)
+
+    if (restoreCursorTo)
+      this.element.setSelectionRange(restoreCursorTo, restoreCursorTo); //Restore cursor in the event of a replacement (a `removeCursorTransform` followed by a `insertCursorTransform`)
   } else {
     this.update();
   }
 };
 
-TextDiffBinding.prototype.update = function() {
+TextDiffBinding.prototype.update = function () {
   let value = this._get();
 
   if (this._getElementValue() === value) return;

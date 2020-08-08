@@ -12,42 +12,42 @@ function StringBinding(element, doc, path, attr, events) {
 StringBinding.prototype = Object.create(AttrDiffBinding.prototype);
 StringBinding.prototype.constructor = StringBinding;
 
-StringBinding.prototype.setup = function() {
+StringBinding.prototype.setup = function () {
   this.update();
   this.attachDoc();
   this.attachElement();
 };
 
-StringBinding.prototype.destroy = function() {
+StringBinding.prototype.destroy = function () {
   this.detachElement();
   this.detachDoc();
 };
 
-StringBinding.prototype.attachElement = function() {
+StringBinding.prototype.attachElement = function () {
   var binding = this;
-  this._inputListener = function() {
+  this._inputListener = function () {
     binding.onInput();
   };
   this.element.addEventListener("input", this._inputListener, false);
 };
 
-StringBinding.prototype.detachElement = function() {
+StringBinding.prototype.detachElement = function () {
   this.element.removeEventListener("input", this._inputListener, false);
 };
 
-StringBinding.prototype.attachDoc = function() {
+StringBinding.prototype.attachDoc = function () {
   var binding = this;
-  this._opListener = function(op, source) {
+  this._opListener = function (op, source) {
     binding._onOp(op, source);
   };
   this.doc.on("op", this._opListener);
 };
 
-StringBinding.prototype.detachDoc = function() {
+StringBinding.prototype.detachDoc = function () {
   this.doc.removeListener("op", this._opListener);
 };
 
-StringBinding.prototype._onOp = function(op, source) {
+StringBinding.prototype._onOp = function (op, source) {
   if (source === this) return;
   if (op.length === 0) return;
   if (op.length > 1) {
@@ -62,25 +62,25 @@ StringBinding.prototype._onOp = function(op, source) {
   }
 };
 
-StringBinding.prototype._parseInsertOp = function(component) {
+StringBinding.prototype._parseInsertOp = function (component) {
   if (!component.si) return;
   var index = component.p[component.p.length - 1];
   var length = component.si.length;
   this.onInsert(index, length);
 };
 
-StringBinding.prototype._parseRemoveOp = function(component) {
+StringBinding.prototype._parseRemoveOp = function (component) {
   if (!component.sd) return;
   var index = component.p[component.p.length - 1];
   var length = component.sd.length;
   this.onRemove(index, length);
 };
 
-StringBinding.prototype._parseParentOp = function() {
+StringBinding.prototype._parseParentOp = function () {
   this.update();
 };
 
-StringBinding.prototype._get = function() {
+StringBinding.prototype._get = function () {
   var value = this.doc.data;
   for (var i = 0; i < this.path.length; i++) {
     var segment = this.path[i];
@@ -89,25 +89,25 @@ StringBinding.prototype._get = function() {
   return value;
 };
 
-StringBinding.prototype._insert = function(index, text) {
+StringBinding.prototype._insert = function (index, text) {
   var path = this.path.concat(index);
   var op = {
     p: path,
-    si: text
+    si: text,
   };
   this.doc.submitOp(op, {
-    source: this
+    source: this,
   });
 };
 
-StringBinding.prototype._remove = function(index, text) {
+StringBinding.prototype._remove = function (index, text) {
   var path = this.path.concat(index);
   var op = {
     p: path,
-    sd: text
+    sd: text,
   };
   this.doc.submitOp(op, {
-    source: this
+    source: this,
   });
 };
 
