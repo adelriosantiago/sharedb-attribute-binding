@@ -48,11 +48,10 @@ StringBinding.prototype.detachDoc = function () {
 };
 
 StringBinding.prototype._onOp = function (op, source) {
-  if (source === this) return;
+  if (source === this) return this._parseParentOp();
   if (op.length === 0) return;
-  if (op.length > 1) {
-    throw new Error("Op with multiple components emitted");
-  }
+  if (op.length > 1) throw new Error("Op with multiple components emitted");
+
   var component = op[0];
   if (isSubpath(this.path, component.p)) {
     this._parseInsertOp(component);
